@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -n 1 
+#SBATCH -t 2:00:00
+#SBATCH -J decals_coverage 
+#SBATCH -o %x.log
+#SBATCH -A phy220048p
+#SBATCH -p HENON 
+# use the bash shell
+
+# echo each command to standard out before running it
+set -x 
+# run the Unix 'date' command
+date
+
+# set up environment
+module purge
+module load anaconda3/2020.07
+
+# activate conda environment
+source /opt/packages/anaconda3/etc/profile.d/conda.sh
+conda deactivate
+condaDIR="/hildafs/projects/phy200025p/tcabrera/.conda/envs/env4followups"
+conda activate $condaDIR
+
+# Run file
+time python decals_coverage.py 
