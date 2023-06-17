@@ -1,5 +1,9 @@
 import numpy as np
+import os
 import pandas as pd
+import sqlite3
+import multiprocessing as mp
+import parmap
 import astropy.units as u
 from astropy.table import Table
 from astropy.coordinates import SkyCoord, match_coordinates_sky
@@ -18,9 +22,10 @@ DELVE_PATH = "../decam-tiles-bliss-v1.fits"
 
 # Read in archive data, extract DES data
 df_archive = pd.read_csv(ARCHIVE_PATH)
+df_archive.rename(columns={"ra_center": "RA", "dec_center": "DEC"}, inplace=True)
+df_archive.dropna(subset=["RA", "DEC"], inplace=True)
 df_des = df_archive[df_archive["2012B-0001"]]
-df_des.rename(columns={"ra_center": "RA", "dec_center": "DEC"}, inplace=True)
-df_des.dropna(subset=["RA", "DEC"], inplace=True)
+df_des["TILEID"] = [f"DES-{x}" for x in df_des.index]
 
 # Read in DECaLS data
 df_decals = Table.read(DECALS_PATH)
@@ -77,20 +82,42 @@ print("df_decals:", df_decals, sep="\n")
 ###  Assemble tesselation  ###
 ##############################
 
-df_des["survey"] = "DES"
-df_decals["survey"] = "DECaLS"
-df_delve["survey"] = "DELVE"
 df_tiling = pd.concat(
     [
-        df_des.loc[df_des["IN_DES"], ["RA", "DEC", "survey"]],
+        df_des.loc[df_des["IN_DES"], ["TILEID", "RA", "DEC"]],
         df_decals.loc[
-            ~df_decals["IN_DES"] & df_decals["IN_DECALS"], ["RA", "DEC", "survey"]
+            ~df_decals["IN_DES"] & df_decals["IN_DECALS"], ["TILEID", "RA", "DEC"]
         ],
         df_delve.loc[
-            ~df_delve["IN_DES"] & ~df_delve["IN_DECALS"], ["RA", "DEC", "survey"]
+            ~df_delve["IN_DES"] & ~df_delve["IN_DECALS"], ["TILEID", "RA", "DEC"]
         ],
     ]
 )
 
 print("df_tiling:", df_tiling, sep="\n")
 df_tiling.to_csv("tiling.csv")
+
+##############################
+###   Evaluate_coverage    ###
+##############################
+
+# Setup tiling coords
+coords_tiling = SkyCoord(ra=df_tiling["RA"], dec=df_tiling["DEC"], unit=u.deg)
+
+# Iterate over search radii
+for sr in [0.05, 0.1, 0.25]:
+    search_radius = 0.05
+    # Iterate over filters
+    for f in list("ugrizY"):
+        coords_archive = SkyCoord(
+            ra=df_archive.loc[df_archive[f], "RA"],
+            dec=df_archive.loc[df_archive[f], "DEC"],
+            unit=u.deg,
+        )
+        # Crossmatch
+        xm_tiling = match_coordinates_sky(coords_tiling, coords_archive)
+        # Add to df_tiling
+        df_tiling[f"des{f.lower()}"] = xm_tiling[1].deg <= search_radius
+    
+    # Save
+    df_tiling.to_csv("tiling_coverage.csv")

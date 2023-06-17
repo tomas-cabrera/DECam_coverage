@@ -1,5 +1,5 @@
 + date
-Thu Jun 15 16:25:14 EDT 2023
+Fri Jun 16 14:43:41 EDT 2023
 + module purge
 ++ /usr/share/lmod/lmod/libexec/lmod bash purge
 + eval unset 'CONDA_DEFAULT_ENV;' unset 'CONDA_EXE;' unset 'CONDA_PKGS_DIRS;' unset 'CONDA_PREFIX;' unset 'CONDA_PROMPT_MODIFIER;' unset 'CONDA_SHLVL;' unset '__LMOD_REF_COUNT_LOADEDMODULES;' unset 'LOADEDMODULES;' 'MODULEPATH=/opt/modulefiles:/usr/share/modulefiles:/usr/share/modulefiles/Linux:/usr/share/modulefiles/Core:/usr/share/lmod/lmod/modulefiles/Core;' export 'MODULEPATH;' '__LMOD_REF_COUNT_PATH=/hildafs/home/tcabrera/.conda/envs/research/bin:1\;/opt/packages/anaconda3/condabin:1\;/hildafs/home/tcabrera/.local/bin:1\;/hildafs/home/tcabrera/bin:1\;/usr/local/bin:1\;/usr/bin:1\;/usr/local/sbin:1\;/usr/sbin:1\;/opt/puppetlabs/bin:1;' export '__LMOD_REF_COUNT_PATH;' 'PATH=/hildafs/home/tcabrera/.conda/envs/research/bin:/opt/packages/anaconda3/condabin:/hildafs/home/tcabrera/.local/bin:/hildafs/home/tcabrera/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/opt/puppetlabs/bin;' export 'PATH;' unset '_CE_CONDA;' unset '_CE_M;' unset '__LMOD_REF_COUNT__LMFILES_;' unset '_LMFILES_;' '_ModuleTable001_=X01vZHVsZVRhYmxlXz17WyJNVHZlcnNpb24iXT0zLFsiY19yZWJ1aWxkVGltZSJdPWZhbHNlLFsiY19zaG9ydFRpbWUiXT1mYWxzZSxkZXB0aFQ9e30sZmFtaWx5PXt9LG1UPXt9LG1wYXRoQT17Ii9vcHQvbW9kdWxlZmlsZXMiLCIvdXNyL3NoYXJlL21vZHVsZWZpbGVzIiwiL3Vzci9zaGFyZS9tb2R1bGVmaWxlcy9MaW51eCIsIi91c3Ivc2hhcmUvbW9kdWxlZmlsZXMvQ29yZSIsIi91c3Ivc2hhcmUvbG1vZC9sbW9kL21vZHVsZWZpbGVzL0NvcmUiLH0sWyJzeXN0ZW1CYXNlTVBBVEgiXT0iL29wdC9tb2R1bGVmaWxlczovdXNyL3NoYXJlL21vZHVsZWZpbGVzOi91c3Ivc2hhcmUvbW9kdWxlZmlsZXMvTGludXg6L3Vzci9zaGFyZS9tb2R1bGVmaWxlcy9Db3JlOi91c3Ivc2hh;' export '_ModuleTable001_;' '_ModuleTable002_=cmUvbG1vZC9sbW9kL21vZHVsZWZpbGVzL0NvcmUiLH0=;' export '_ModuleTable002_;' '_ModuleTable_Sz_=2;' export '_ModuleTable_Sz_;'
@@ -216,104 +216,94 @@ export CONDA_PYTHON_EXE='\''/opt/packages/anaconda3/bin/python'\'''
 + '[' -n '' ']'
 + hash -r
 + python assemble_tessellation.py
-/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/coverage_map/assemble_tessellation/assemble_tessellation.py:22: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame
+/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/DECam_coverage/assemble_tessellation/assemble_tessellation.py:28: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  df_des.rename(columns={"ra_center": "RA", "dec_center": "DEC"}, inplace=True)
-/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/coverage_map/assemble_tessellation/assemble_tessellation.py:23: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  df_des.dropna(subset=["RA", "DEC"], inplace=True)
-/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/coverage_map/assemble_tessellation/assemble_tessellation.py:55: SettingWithCopyWarning: 
+  df_des["TILEID"] = [f"DES-{x}" for x in df_des.index]
+/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/DECam_coverage/assemble_tessellation/assemble_tessellation.py:62: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df_des["id_delve"] = df_delve.index[xm_des[0]]
-/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/coverage_map/assemble_tessellation/assemble_tessellation.py:56: SettingWithCopyWarning: 
+/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/DECam_coverage/assemble_tessellation/assemble_tessellation.py:63: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df_des["sep_delve"] = xm_des[1].value
-/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/coverage_map/assemble_tessellation/assemble_tessellation.py:57: SettingWithCopyWarning: 
+/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/DECam_coverage/assemble_tessellation/assemble_tessellation.py:64: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df_des["IN_DES"] = df_delve["IN_DES"].to_numpy()[xm_des[0]]
-/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/coverage_map/assemble_tessellation/assemble_tessellation.py:58: SettingWithCopyWarning: 
+/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/DECam_coverage/assemble_tessellation/assemble_tessellation.py:65: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
   df_des["IN_DECALS"] = df_delve["IN_DECALS"].to_numpy()[xm_des[0]]
-/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/coverage_map/assemble_tessellation/assemble_tessellation.py:78: SettingWithCopyWarning: 
-A value is trying to be set on a copy of a slice from a DataFrame.
-Try using .loc[row_indexer,col_indexer] = value instead
-
-See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-  df_des["survey"] = "DES"
 df_archive:
-         ra_center  dec_center      u  ...  2012B-0001  2014B-0404  2019A-0305
-0        16.007083  -12.967750  False  ...       False       False        True
-1       297.083542  -34.820306  False  ...       False       False        True
-2        11.620583  -17.043528  False  ...       False       False        True
-3         5.838375  -11.833806  False  ...       False       False        True
-4         0.319667  -39.139833  False  ...       False       False        True
-...            ...         ...    ...  ...         ...         ...         ...
-462905  196.757125   -3.742333  False  ...       False       False       False
-462906  141.053083    9.449861  False  ...       False       False       False
-462907  164.246625   -0.543722  False  ...       False       False       False
-462908  175.657375    0.706556  False  ...       False       False       False
-462909   52.646958  -28.097250  False  ...       False       False       False
-
-[462910 rows x 11 columns]
-df_des:
                 RA        DEC      u  ...  2012B-0001  2014B-0404  2019A-0305
-51       65.105067 -30.360976  False  ...        True       False       False
-197      36.448125  -4.601111  False  ...        True       False       False
-362      16.104167 -18.170889  False  ...        True       False       False
-374      71.456200 -33.100032  False  ...        True       False       False
-393       1.249333  -0.940222  False  ...        True       False       False
+0        16.007083 -12.967750  False  ...       False       False        True
+1       297.083542 -34.820306  False  ...       False       False        True
+2        11.620583 -17.043528  False  ...       False       False        True
+3         5.838375 -11.833806  False  ...       False       False        True
+4         0.319667 -39.139833  False  ...       False       False        True
 ...            ...        ...    ...  ...         ...         ...         ...
-462865  335.885792 -48.603000  False  ...        True       False       False
-462869   42.014833 -58.358139  False  ...        True       False       False
-462872   21.306625 -55.704333  False  ...        True       False       False
-462873   84.367583 -26.487194  False  ...        True       False       False
-462887   14.744708 -37.446000  False  ...        True       False       False
+462905  196.757125  -3.742333  False  ...       False       False       False
+462906  141.053083   9.449861  False  ...       False       False       False
+462907  164.246625  -0.543722  False  ...       False       False       False
+462908  175.657375   0.706556  False  ...       False       False       False
+462909   52.646958 -28.097250  False  ...       False       False       False
 
-[109485 rows x 11 columns]
+[462909 rows x 11 columns]
+df_des:
+                RA        DEC      u  ...  2014B-0404  2019A-0305      TILEID
+51       65.105067 -30.360976  False  ...       False       False      DES-51
+197      36.448125  -4.601111  False  ...       False       False     DES-197
+362      16.104167 -18.170889  False  ...       False       False     DES-362
+374      71.456200 -33.100032  False  ...       False       False     DES-374
+393       1.249333  -0.940222  False  ...       False       False     DES-393
+...            ...        ...    ...  ...         ...         ...         ...
+462865  335.885792 -48.603000  False  ...       False       False  DES-462865
+462869   42.014833 -58.358139  False  ...       False       False  DES-462869
+462872   21.306625 -55.704333  False  ...       False       False  DES-462872
+462873   84.367583 -26.487194  False  ...       False       False  DES-462873
+462887   14.744708 -37.446000  False  ...       False       False  DES-462887
+
+[109485 rows x 12 columns]
 df_decals:
-       TILEID        RA     DEC  ...  G_SEEING  R_SEEING  Z_SEEING
-0           1  239.1250  2.5900  ...  1.167846  1.109319  1.326411
-1           2  237.8490  1.3330  ...  1.523905  1.237148  1.436734
-2           3  233.8600  3.2070  ...  1.276114  1.293276  1.403368
-3           4  238.6550  4.1310  ...  1.576772  1.330382  1.623589
-4           5  237.3440  2.8850  ...  1.223397  1.198750  1.453095
-...       ...       ...     ...  ...       ...       ...       ...
-59218   59219  329.8441 -5.3744  ...  1.185558  0.000000  0.000000
-59219   59220  331.6891 -5.3744  ...  1.095335  0.000000  0.000000
-59220   59221  333.5341 -5.3744  ...  1.120664  0.000000  0.000000
-59221   59222  335.3791 -5.3744  ...  1.183713  0.000000  0.000000
-59222   59223  337.2241 -5.3744  ...  1.230109  0.000000  0.000000
+             TILEID        RA     DEC  ...  G_SEEING  R_SEEING  Z_SEEING
+0          DECaLS-1  239.1250  2.5900  ...  1.167846  1.109319  1.326411
+1          DECaLS-2  237.8490  1.3330  ...  1.523905  1.237148  1.436734
+2          DECaLS-3  233.8600  3.2070  ...  1.276114  1.293276  1.403368
+3          DECaLS-4  238.6550  4.1310  ...  1.576772  1.330382  1.623589
+4          DECaLS-5  237.3440  2.8850  ...  1.223397  1.198750  1.453095
+...             ...       ...     ...  ...       ...       ...       ...
+59218  DECaLS-59219  329.8441 -5.3744  ...  1.185558  0.000000  0.000000
+59219  DECaLS-59220  331.6891 -5.3744  ...  1.095335  0.000000  0.000000
+59220  DECaLS-59221  333.5341 -5.3744  ...  1.120664  0.000000  0.000000
+59221  DECaLS-59222  335.3791 -5.3744  ...  1.183713  0.000000  0.000000
+59222  DECaLS-59223  337.2241 -5.3744  ...  1.230109  0.000000  0.000000
 
 [59223 rows x 24 columns]
 df_delve:
-       TILEID  PASS          RA  ...  IN_DECALS  IN_SMASH  IN_MAGLITES
-0           1     1  239.125000  ...       True     False        False
-1           2     1  237.849000  ...       True     False        False
-2           3     1  233.860000  ...       True     False        False
-3           4     1  238.655000  ...       True     False        False
-4           5     1  237.344000  ...       True     False        False
-...       ...   ...         ...  ...        ...       ...          ...
-63483   15868     4  156.418748  ...       True     False        False
-63484   15869     4  155.555748  ...       True     False        False
-63485   15870     4  157.279748  ...       True     False        False
-63486   15871     4  159.015748  ...       True     False        False
-63487   15872     4  158.149748  ...       True     False        False
+            TILEID  PASS          RA  ...  IN_DECALS  IN_SMASH  IN_MAGLITES
+0          DELVE-1     1  239.125000  ...       True     False        False
+1          DELVE-2     1  237.849000  ...       True     False        False
+2          DELVE-3     1  233.860000  ...       True     False        False
+3          DELVE-4     1  238.655000  ...       True     False        False
+4          DELVE-5     1  237.344000  ...       True     False        False
+...            ...   ...         ...  ...        ...       ...          ...
+63483  DELVE-15868     4  156.418748  ...       True     False        False
+63484  DELVE-15869     4  155.555748  ...       True     False        False
+63485  DELVE-15870     4  157.279748  ...       True     False        False
+63486  DELVE-15871     4  159.015748  ...       True     False        False
+63487  DELVE-15872     4  158.149748  ...       True     False        False
 
 [63488 rows x 8 columns]
 coords_delve: <SkyCoord (ICRS): (ra, dec) in deg
@@ -338,38 +328,38 @@ df_des:
 462873   84.367583 -26.487194  False  ...   0.474786    True      False
 462887   14.744708 -37.446000  False  ...   0.409746    True      False
 
-[109485 rows x 15 columns]
+[109485 rows x 16 columns]
 df_decals:
-       TILEID        RA     DEC  PASS  ...  Z_SEEING  id_delve  sep_delve  IN_DECALS
-0           1  239.1250  2.5900     1  ...  1.326411         0   0.000000       True
-1           2  237.8490  1.3330     1  ...  1.436734         1   0.000000       True
-2           3  233.8600  3.2070     1  ...  1.403368         2   0.000000       True
-3           4  238.6550  4.1310     1  ...  1.623589         3   0.000000       True
-4           5  237.3440  2.8850     1  ...  1.453095         4   0.000000       True
-...       ...       ...     ...   ...  ...       ...       ...        ...        ...
-59218   59219  329.8441 -5.3744     7  ...  0.000000     43582   0.580671       True
-59219   59220  331.6891 -5.3744     7  ...  0.000000     27746   0.552021       True
-59220   59221  333.5341 -5.3744     7  ...  0.000000     27759   0.453404       True
-59221   59222  335.3791 -5.3744     7  ...  0.000000     29881   0.384319       True
-59222   59223  337.2241 -5.3744     7  ...  0.000000     29888   0.347610       True
+             TILEID        RA     DEC  ...  id_delve  sep_delve  IN_DECALS
+0          DECaLS-1  239.1250  2.5900  ...         0   0.000000       True
+1          DECaLS-2  237.8490  1.3330  ...         1   0.000000       True
+2          DECaLS-3  233.8600  3.2070  ...         2   0.000000       True
+3          DECaLS-4  238.6550  4.1310  ...         3   0.000000       True
+4          DECaLS-5  237.3440  2.8850  ...         4   0.000000       True
+...             ...       ...     ...  ...       ...        ...        ...
+59218  DECaLS-59219  329.8441 -5.3744  ...     43582   0.580671       True
+59219  DECaLS-59220  331.6891 -5.3744  ...     27746   0.552021       True
+59220  DECaLS-59221  333.5341 -5.3744  ...     27759   0.453404       True
+59221  DECaLS-59222  335.3791 -5.3744  ...     29881   0.384319       True
+59222  DECaLS-59223  337.2241 -5.3744  ...     29888   0.347610       True
 
 [59223 rows x 27 columns]
 df_tiling:
-               RA        DEC survey
-51      65.105067 -30.360976    DES
-197     36.448125  -4.601111    DES
-362     16.104167 -18.170889    DES
-374     71.456200 -33.100032    DES
-393      1.249333  -0.940222    DES
-...           ...        ...    ...
-63347  149.141748 -12.565000  DELVE
-63348  148.411748 -11.029000  DELVE
-63367  150.857748 -12.502000  DELVE
-63368  150.113748 -10.975000  DELVE
-63389  151.822748 -10.913000  DELVE
+            TILEID          RA        DEC
+51          DES-51   65.105067 -30.360976
+197        DES-197   36.448125  -4.601111
+362        DES-362   16.104167 -18.170889
+374        DES-374   71.456200 -33.100032
+393        DES-393    1.249333  -0.940222
+...            ...         ...        ...
+63347  DELVE-15732  149.141748 -12.565000
+63348  DELVE-15733  148.411748 -11.029000
+63367  DELVE-15752  150.857748 -12.502000
+63368  DELVE-15753  150.113748 -10.975000
+63389  DELVE-15774  151.822748 -10.913000
 
 [163545 rows x 3 columns]
 
-real	0m11.067s
-user	0m8.842s
-sys	0m0.774s
+real	0m41.640s
+user	0m37.546s
+sys	0m2.073s
