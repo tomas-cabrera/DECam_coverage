@@ -11,6 +11,7 @@ from astropy.coordinates import SkyCoord, match_coordinates_sky
 ###############################################################################
 
 ARCHIVE_PATH = "../archive_coverage/archive_byfilter.csv"
+DES_PATH = "../des_coverage/des_byfilter.csv"
 DECALS_PATH = "../decam-tiles_obstatus_DECaLS_2019.fits"
 DELVE_PATH = "../decam-tiles-bliss-v1.fits"
 
@@ -20,11 +21,15 @@ DELVE_PATH = "../decam-tiles-bliss-v1.fits"
 ###         Setup          ###
 ##############################
 
-# Read in archive data, extract DES data
+# Read in archive data
 df_archive = pd.read_csv(ARCHIVE_PATH)
 df_archive.rename(columns={"ra_center": "RA", "dec_center": "DEC"}, inplace=True)
 df_archive.dropna(subset=["RA", "DEC"], inplace=True)
-df_des = df_archive[df_archive["2012B-0001"]]
+
+# Load DES data
+df_des = pd.read_csv(DES_PATH)
+df_des.rename(columns={"ra": "RA", "dec": "DEC"}, inplace=True)
+df_des.dropna(subset=["RA", "DEC"], inplace=True)
 df_des["TILEID"] = [f"DES-{x}" for x in df_des.index]
 
 # Read in DECaLS data
@@ -118,6 +123,6 @@ for sr in [0.05, 0.1, 0.25]:
         xm_tiling = match_coordinates_sky(coords_tiling, coords_archive)
         # Add to df_tiling
         df_tiling[f"des{f.lower()}"] = xm_tiling[1].deg <= search_radius
-    
+
     # Save
     df_tiling.to_csv("tiling_coverage.csv")

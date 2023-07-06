@@ -6,6 +6,16 @@ import pandas as pd
 
 ###############################################################################
 
+
+def good_object(object):
+    try:
+        return ("hex" in object) and (int(object.split()[-1]) in [1, 2, 3])
+    except:
+        return False
+
+
+###############################################################################
+
 NATROOT = "https://astroarchive.noirlab.edu"
 ADSURL = f"{NATROOT}/api/adv_search"
 
@@ -35,7 +45,7 @@ JJ = {
 
 # Get archive images
 ARCHIVE_IMAGES_PATH = "./des_coverage.csv"
-if pa.exists(ARCHIVE_IMAGES_PATH):
+if False:  # pa.exists(ARCHIVE_IMAGES_PATH):
     df = pd.read_csv(ARCHIVE_IMAGES_PATH)
 else:
     # Fetch
@@ -46,8 +56,8 @@ else:
     df["ifilter"] = df["ifilter"].apply(lambda x: "NaN" if x == None else x[0])
     df = df[df["ifilter"].apply(lambda x: x in list("ugrizY"))]
 
-    # Keep hex tilings
-    df = df[df["OBJECT"].apply(lambda x: "hex" in x)]
+    # Keep hex tilings, from passes 1, 2, and 3
+    df = df[df["OBJECT"].apply(good_object)]
 
     # Reduce by exposure times
     df.drop(
