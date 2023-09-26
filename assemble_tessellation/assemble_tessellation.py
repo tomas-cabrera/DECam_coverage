@@ -1,19 +1,22 @@
-import numpy as np
-import os
-import pandas as pd
-import sqlite3
 import multiprocessing as mp
-import parmap
+import os
+import sqlite3
+import os.path as pa
+
 import astropy.units as u
-from astropy.table import Table
+import numpy as np
+import pandas as pd
+import parmap
 from astropy.coordinates import SkyCoord, match_coordinates_sky
+from astropy.table import Table
 
 ###############################################################################
 
-ARCHIVE_PATH = "../archive_coverage/archive_byfilter.csv"
-DES_PATH = "../des_coverage/des_byfilter.csv"
-DECALS_PATH = "../decam-tiles_obstatus_DECaLS_2019.fits"
-DELVE_PATH = "../decam-tiles-bliss-v1.fits"
+PROJ_PATH = "/hildafs/projects/phy220048p/tcabrera/decam_followup_O4/DECam_coverage"
+ARCHIVE_PATH = f"{PROJ_PATH}/archive_coverage/archive_byfilter.csv"
+DES_PATH = f"{PROJ_PATH}/des_coverage/des_byfilter.csv"
+DECALS_PATH = f"{PROJ_PATH}/decam-tiles_obstatus_DECaLS_2019.fits"
+DELVE_PATH = f"{PROJ_PATH}/decam-tiles-bliss-v1.fits"
 
 ###############################################################################
 
@@ -35,14 +38,19 @@ df_des["TILEID"] = [f"DES-{x}" for x in df_des.index]
 # Read in DECaLS data
 df_decals = Table.read(DECALS_PATH)
 df_decals = df_decals.to_pandas()
+df_decals.sort_values(by="TILEID")
 df_decals.dropna(subset=["RA", "DEC"], inplace=True)
 df_decals["TILEID"] = df_decals["TILEID"].apply(lambda x: f"DECaLS-{x}")
 
 # Read in DELVE data
+# TODO: Use "PASS" column in TILEID as well
 df_delve = Table.read(DELVE_PATH)
 df_delve = df_delve.to_pandas()
+df_delve.sort_values(by="TILEID")
 df_delve.dropna(subset=["RA", "DEC"], inplace=True)
-df_delve["TILEID"] = df_delve["TILEID"].apply(lambda x: f"DELVE-{x}")
+df_delve["TILEID"] = df_delve.apply(
+    lambda x: f"DELVE-{x['TILEID']}-{x['PASS']}", axis=1
+)
 
 print("df_archive:", df_archive, sep="\n")
 print("df_des:", df_des, sep="\n")
@@ -100,7 +108,7 @@ df_tiling = pd.concat(
 )
 
 print("df_tiling:", df_tiling, sep="\n")
-df_tiling.to_csv("tiling.csv")
+df_tiling.to_csv(f"{pa.dirname(__file__)}/tiling.csv")
 
 ##############################
 ###   Evaluate_coverage    ###
@@ -125,4 +133,4 @@ for sr in [0.05, 0.1, 0.25]:
         df_tiling[f"des{f.lower()}"] = xm_tiling[1].deg <= search_radius
 
     # Save
-    df_tiling.to_csv("tiling_coverage.csv")
+    df_tiling.to_csv(f"{pa.dirname(__file__)}/tiling_coverage.csv")

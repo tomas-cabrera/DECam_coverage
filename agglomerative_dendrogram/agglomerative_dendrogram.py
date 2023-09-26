@@ -1,4 +1,5 @@
 import os.path as pa
+
 import numpy as np
 import pandas as pd
 from joblib import dump, load
@@ -34,7 +35,9 @@ def plot_dendrogram(model, **kwargs):
 
 # iris = load_iris()
 # X = iris.data
-df = pd.read_csv("../assemble_tessellation/tiling_coverage.csv")
+df = pd.read_csv(
+    f"{pa.dirname(pa.dirname(__file__))}/assemble_tessellation/tiling_coverage.csv"
+)
 df = df[df["DEC"] <= 35]
 X = df[["RA", "DEC"]].to_numpy()
 
@@ -64,11 +67,11 @@ else:
 # Save cluster membership
 df["clus_id"] = model.labels_
 df.drop_duplicates(subset=["clus_id"], inplace=True)
-df.to_csv("tiling_coverage.clustered.csv", index=False)
+df.to_csv(f"{pa.dirname(__file__)}/tiling_coverage.clustered.csv", index=False)
 
 # Plot
 plt.title("Hierarchical Clustering Dendrogram")
 # plot the top three levels of the dendrogram
 plot_dendrogram(model, truncate_mode="level", p=5)
 plt.xlabel("Number of points in node (or index of point if no parenthesis).")
-plt.savefig("agglomerative_dendrogram.png")
+plt.savefig(f"{pa.dirname(__file__)}/agglomerative_dendrogram.png")

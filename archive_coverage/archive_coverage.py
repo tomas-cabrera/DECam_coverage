@@ -33,7 +33,8 @@ JJ = {
 ##############################
 
 # Get archive images
-ARCHIVE_IMAGES_PATH = "./archive_coverage.csv"
+PROJ_PATH = "/hildafs/project/phy220048p/tcabrera/decam_followup_O4/DECam_coverage"
+ARCHIVE_IMAGES_PATH = f"{pa.dirname(__file__)}/archive_coverage.csv"
 if pa.exists(ARCHIVE_IMAGES_PATH):
     df = pd.read_csv(ARCHIVE_IMAGES_PATH)
 else:
@@ -73,4 +74,4 @@ for f in list("ugrizY"):
 for p in ["2012B-0001", "2014B-0404", "2019A-0305"]:
     df_coverage[p] = df_coverage.index.isin(df.index[df["proposal"] == p])
 # Save
-df_coverage.to_csv("./archive_byfilter.csv")
+df_coverage.to_csv(f"{pa.dirname(__file__)}/archive_byfilter.csv")

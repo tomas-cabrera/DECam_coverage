@@ -26,5 +26,10 @@ Fortunately, these pointing errors are an order of magnitude smaller than the di
 At this point a hard cut rejecting pointings with dec $\ge 35^\circ$ was also applied to further reduce the number of pointings, and the resulting list was saved as [`tiling_coverage.clustered.csv`](https://github.com/tomas-cabrera/DECam_coverage/blob/main/agglomerative_dendrogram/tiling_coverage.clustered.csv).
 [coverage_to_gwemopt](https://github.com/tomas-cabrera/DECam_coverage/tree/main/coverage_to_gwemopt) then takes this mapping and casts it in the `DECam.tess` and `DECam.ref` files needed for `gwemopt`.
 
+In `coverage_to_gwemopt.py`, the fields are assigned integer ids, as opposed to a `<survey>-<survey_index>`-style format.
+All surveys have a number of pointing in the ten-thousands, and so to maintain a distinction among the surveys different millions intervals are reserved for each of the surveys: DES has ids 1000000-1099999, DECaLS has ids 2000000-2099999, and DELVE has ids 3000000-3499999.
+DES and DELVE already assign unique ids to every pointing, but DELVE uses the same field id for all passes; accordingly, the different passes are allocated a separate hundred thousands interval, i.e. DELVE pass 1 is assigned ids 3100000-3199999, pass 2 is assigned DELVE ids 3200000-3299999, etc.
+Altogether, the first digit of the custom field id encodes the survey the pointing is selected from, the second digit indicates the DELVE pass number (the other two surveys always have 0 as the second digit), and the last 5 digits carries forward the survey id number (except for DES, which as the pointings were taken from the NOIRLab Astro Data Archive simply were assigned indices; this could be improved to use the DES ids later).
+
 The other folder here is [evaluate_coverage](https://github.com/tomas-cabrera/DECam_coverage/tree/main/evaluate_coverage), which was a first attempt at determining filterwise coverage, but only using the DECaLS tiling.
 It should be considered deprecated.

@@ -167,6 +167,7 @@ for f in df_templates["filter"].unique()[-1:]:
         path_to_figure = path_to_templates.replace(
             ".csv", f".{t['ra']}{t['declination']}.pdf"
         )
+        # Plot ccds
         for ccdid in c1_corners["CCD"].unique():
             df_temp = c1_corners[c1_corners["CCD"] == ccdid].copy()
             df_temp = df_temp.iloc[[0, 1, 3, 2, 0]]
@@ -176,15 +177,18 @@ for f in df_templates["filter"].unique()[-1:]:
                 c="k",
                 lw=0.5,
             )
+        # Plot localization
         plt.plot(
             RAcorners[[0, 1, 2, 3, 0]],
             DECcorners[[0, 1, 2, 3, 0]],
             c="r",
         )
+        # Plot XRT source
         plt.scatter(
             [79.7533],
             [-47.8930],
             c="b",
+            marker="+",
         )
         plt.title(f"RA: {t['ra']} Dec: {t['declination']}")
         plt.gca().set_aspect("equal")
